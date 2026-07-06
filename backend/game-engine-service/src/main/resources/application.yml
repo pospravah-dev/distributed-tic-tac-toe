@@ -1,0 +1,26 @@
+server:
+  port: 8081
+  shutdown: graceful
+  error:
+    include-message: always
+    include-binding-errors: always
+
+spring:
+  application:
+    name: game-engine-service
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    root: INFO
+    com.flamingo.tictactoe: DEBUG
+    org.springframework.web: INFO
+    org.springframework.web.cors: DEBUG

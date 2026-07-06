@@ -1,0 +1,28 @@
+server:
+  port: 8082
+  shutdown: graceful
+  error:
+    include-message: always
+    include-binding-errors: always
+
+spring:
+  application:
+    name: game-session-service
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    root: INFO
+    com.flamingo.tictactoe: DEBUG
+    org.springframework.web: INFO
+    org.springframework.web.cors: DEBUG
+

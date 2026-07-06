@@ -1,0 +1,60 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          globalcors:
+            corsConfigurations:
+              '[/**]':
+                allowedOrigins:
+                  - "http://localhost:3000"
+                allowedMethods:
+                  - GET
+                  - POST
+                  - PUT
+                  - DELETE
+                  - OPTIONS
+                allowedHeaders: "*"
+                allowCredentials: true
+
+          routes:
+            # -----------------------------
+            # game-session-service (8082)
+            # -----------------------------
+            - id: game-session-service
+              uri: ${SESSION_SERVICE_URL:http://localhost:8082}
+              predicates:
+                - Path=/api/sessions/**,/api/sessions
+              filters:
+                - StripPrefix=1
+
+            # -----------------------------
+            # game-engine-service (8081)
+            # SSE + game endpoints
+            # -----------------------------
+            - id: game-engine-events
+              uri: ${ENGINE_SERVICE_URL:http://localhost:8081}
+              predicates:
+                - Path=/api/events/**
+              filters:
+                - StripPrefix=1
+
+            - id: game-engine-games
+              uri: ${ENGINE_SERVICE_URL:http://localhost:8081}
+              predicates:
+                - Path=/api/games/**
+              filters:
+                - StripPrefix=1
+
+
+logging:
+  level:
+    root: INFO
+    com.flamingo.tictactoe.gateway: DEBUG
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.cloud.gateway.route: DEBUG
+    org.springframework.cloud.gateway.route.builder: DEBUG
+    org.springframework.web.cors: DEBUG
