@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  # Frontend - React app served by nginx
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    restart: unless-stopped
+    depends_on:
+      api-gateway:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:80"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+
+  # API Gateway - Routes requests to backend services
+  api-gateway:
+    build:
+      context: ./backend/api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    depends_on:
+      game-session-service:
+        condition: service_healthy
+      game-engine-service:
+        condition: service_healthy
+    environment:
+      - SESSION_SERVICE_URL=http://game-session-service:8082
+      - ENGINE_SERVICE_URL=http://game-engine-service:8081
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  # Game Engine Service - Core game logic and SSE events
+  game-engine-service:
+    build:
+      context: ./backend/game-engine-service
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8081/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  # Game Session Service - Session management and simulation
+  game-session-service:
+    build:
+      context: ./backend/game-session-service
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    restart: unless-stopped
+    depends_on:
+      game-engine-service:
+        condition: service_healthy
+    environment:
+      - GAME_ENGINE_URL=http://game-engine-service:8081
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8082/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
