@@ -1,4 +1,4 @@
-# Distributed Tic Tac Toe - Backend
+``# Distributed Tic Tac Toe - Backend
 
 Microservices backend for real-time Tic Tac Toe game simulation with Server-Sent Events (SSE).
 
@@ -37,23 +37,9 @@ Microservices backend for real-time Tic Tac Toe game simulation with Server-Sent
 | game-engine-service | 8081 | 25 | Game logic, board state, SSE events |
 | game-session-service | 8082 | 21 | Session management, simulation orchestration |
 
-### Java Version Note
-
-This project uses mixed Java versions:
-- **Java 21**: `api-gateway`, `game-session-service`
-- **Java 25**: `game-engine-service`
-
-Use [SDKMAN](https://sdkman.io/) or similar tool to manage multiple Java versions:
-```bash
-sdk install java 21.0.0-tem
-sdk install java 25.0.0-tem
-sdk use java 21.0.0-tem  # For gateway and session service
-sdk use java 25.0.0-tem  # For engine service
-```
-
 ## Prerequisites
 
-- **Java 21** and **Java 25** JDK installed
+- **Java 25** JDK installed
 - **Maven 3.8+** installed
 - **Docker & Docker Compose** (optional, for containerized deployment)
 

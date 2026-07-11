@@ -1,7 +1,7 @@
 package com.edu.tictactoe.gameengine.controller;
 
 import com.edu.tictactoe.gameengine.domain.Game;
-import com.flamingo.tictactoe.gameengine.domain.*;
+import com.edu.tictactoe.gameengine.domain.*;
 import com.edu.tictactoe.gameengine.dto.MoveRequest;
 import com.edu.tictactoe.gameengine.dto.MoveResponse;
 import com.edu.tictactoe.gameengine.service.GameService;

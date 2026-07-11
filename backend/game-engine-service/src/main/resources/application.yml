@@ -21,6 +21,6 @@ management:
 logging:
   level:
     root: INFO
-    com.flamingo.tictactoe: DEBUG
+    com.edu.tictactoe: DEBUG
     org.springframework.web: INFO
     org.springframework.web.cors: DEBUG

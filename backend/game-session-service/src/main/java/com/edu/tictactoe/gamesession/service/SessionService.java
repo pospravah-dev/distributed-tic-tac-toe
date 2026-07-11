@@ -4,7 +4,6 @@ import com.edu.tictactoe.gamesession.client.GameEngineClient;
 import com.edu.tictactoe.gamesession.domain.GameSessionState;
 import com.edu.tictactoe.gamesession.domain.Move;
 import com.edu.tictactoe.gamesession.domain.Session;
-import com.flamingo.tictactoe.gamesession.domain.*;
 import com.edu.tictactoe.gamesession.exception.SessionNotFoundException;
 import com.edu.tictactoe.gamesession.exception.SimulationException;
 import com.edu.tictactoe.gamesession.util.IdGenerator;

@@ -11,7 +11,7 @@
         <relativePath/>
     </parent>
     
-    <groupId>com.flamingo.tictactoe</groupId>
+    <groupId>com.edu.tictactoe</groupId>
     <artifactId>game-engine-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>game-engine-service</name>
