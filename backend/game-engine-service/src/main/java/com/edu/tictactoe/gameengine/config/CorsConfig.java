@@ -20,17 +20,4 @@ public class CorsConfig {
                 )
                 .build();
     }
-//    @Bean
-//    public WebFluxConfigurer corsConfigurer() {
-//        return new WebFluxConfigurer() {
-//            @Override
-//            public void addCorsMappings(CorsRegistry registry) {
-//                registry.addMapping("/**")
-//                    .allowedOrigins("http://localhost:3000")
-//                    .allowedMethods("*")
-//                    .allowedHeaders("*")
-//                    .allowCredentials(true);
-//            }
-//        };
-//    }
 }

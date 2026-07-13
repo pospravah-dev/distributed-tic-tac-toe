@@ -13,7 +13,8 @@ public class EventEmitterRepository {
     private final Map<String, Sinks.Many<ServerSentEvent<?>>> emitters = new ConcurrentHashMap<>();
 
     public Sinks.Many<ServerSentEvent<?>> createEmitter(String gameId) {
-        return emitters.computeIfAbsent(gameId, k -> Sinks.many().multicast().onBackpressureBuffer());
+        return emitters.computeIfAbsent(gameId, k ->
+                Sinks.many().multicast().onBackpressureBuffer());
     }
 
     public void removeEmitter(String gameId) {

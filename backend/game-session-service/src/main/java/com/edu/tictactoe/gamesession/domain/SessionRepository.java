@@ -1,9 +1,13 @@
 package com.edu.tictactoe.gamesession.domain;
 
+import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
+
+@Repository
 public class SessionRepository {
     private final ConcurrentHashMap<String, Session> sessions = new ConcurrentHashMap<>();
 

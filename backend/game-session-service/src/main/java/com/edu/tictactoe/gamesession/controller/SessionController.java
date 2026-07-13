@@ -1,7 +1,9 @@
 package com.edu.tictactoe.gamesession.controller;
 
 import com.edu.tictactoe.gamesession.dto.SessionResponse;
+import com.edu.tictactoe.gamesession.exception.SessionNotFoundException;
 import com.edu.tictactoe.gamesession.service.SessionService;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
@@ -28,9 +30,17 @@ public class SessionController {
     }
 
     @PostMapping("/{sessionId}/simulate")
-    public Mono<ResponseEntity<String>> simulateGame(@PathVariable String sessionId) {
-        return sessionService.simulateGame(sessionId)
-                .map(ResponseEntity::ok)
-                .defaultIfEmpty(ResponseEntity.notFound().build());
+    public Mono<ResponseEntity<Void>> simulateGame(@PathVariable String sessionId) {
+        return sessionService.getSession(sessionId)
+                .flatMap(session -> {
+                    // Fire-and-forget: start async simulation
+                    sessionService.simulateGameAsync(sessionId);
+                    return Mono.just(ResponseEntity.accepted()
+                            .header("Location", "/sessions/" + sessionId)
+                            .<Void>build());
+                })
+                .onErrorResume(SessionNotFoundException.class, e ->
+                        Mono.just(ResponseEntity.notFound().build())
+                );
     }
 }
