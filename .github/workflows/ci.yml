@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  backend:
+    name: Build backend microservices
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        service: [api-gateway, game-engine-service, game-session-service]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+
+      - name: Build Maven module
+        working-directory: ./backend/${{ matrix.service }}
+        run: mvn -B -DskipTests package
+
+  frontend:
+    name: Build frontend
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: frontend/tictactoe-ui/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./frontend/tictactoe-ui
+        run: npm ci
+      
+      - name: Run Lint
+        working-directory: ./frontend/tictactoe-ui
+        run: npm run lint
+
+      - name: Build frontend
+        working-directory: ./frontend/tictactoe-ui
+        run: npm run build
