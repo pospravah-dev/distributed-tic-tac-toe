@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: game-engine-service-test
+
+server:
+  port: 8081
+
+logging:
+  level:
+    root: WARN
+    com.edu.tictactoe.gameengine: DEBUG
