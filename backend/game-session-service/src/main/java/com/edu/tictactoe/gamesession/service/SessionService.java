@@ -99,7 +99,7 @@ public class SessionService {
             .onErrorResume(e -> Mono.error(new SimulationException("Error during simulation: " + e.getMessage(), e)));
     }
 
-    private List<Integer> getAvailablePositions(List<Move> moveHistory) {
+    List<Integer> getAvailablePositions(List<Move> moveHistory) {
         List<Integer> available = new ArrayList<>();
         IntStream.range(0, BOARD_SIZE).forEach(i -> {
             final int pos = i;

@@ -1,0 +1,20 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+    web-application-type: reactive
+
+game-engine:
+  url: http://localhost:8081
+
+logging:
+  level:
+    root: INFO
+    com.edu.tictactoe.gamesession: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.test: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: none

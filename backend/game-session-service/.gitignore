@@ -4,3 +4,5 @@ target/
 .mvn/wrapper/maven-wrapper.jar
 .idea/
 *.iml
+# Testcontainers
+.testcontainers/
